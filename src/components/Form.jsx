@@ -1,5 +1,5 @@
 import Btn from "../components/Btn"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
@@ -42,14 +42,8 @@ const Form = ({ fields, btnTxt }) => {
 
   function handleSubmit(event) {
     event.preventDefault()
-    // submitToApi(formData)
     console.log(formData)
   }
-
-  // Just logging everytime formData changes hehehe
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
 
   return (
     <form onSubmit={handleSubmit} css={style} action="">

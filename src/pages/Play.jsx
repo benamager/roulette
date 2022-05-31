@@ -21,8 +21,16 @@ const Play = () => {
         <Roulette />
         <InputAmount />
         <div css={dropperStyle}>
-          <Dropper color="red" x={2} />
-          <Dropper color="green" x={14} />
+          <Dropper
+            color="red"
+            x={2}
+            users={[{ username: "benjamin", amount: 200 }]}
+          />
+          <Dropper
+            color="green"
+            x={14}
+            users={[{ username: "oliver", amount: 200 }]}
+          />
           <Dropper color="black" x={2} />
         </div>
       </div>

@@ -19,7 +19,6 @@ const Roulette = () => {
           if (prevState === 1) {
             let randomNumber =
               Math.floor(Math.random() * (rouletteAmount * 100) - 7000) + 9000
-            console.log(randomNumber)
             setTransform(randomNumber)
           }
           return prevState - 1

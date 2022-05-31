@@ -34,7 +34,9 @@ const Navigation = () => {
 
   return (
     <nav css={style}>
-      <h2>Shit casino</h2>
+      <Link to="/">
+        <h2>Shit casino</h2>
+      </Link>
       <ul>
         <li>
           <Link to="/">Home</Link>
