@@ -30,6 +30,12 @@ const Roulette = () => {
   })
 
   function finishedSpinning() {
+    let numberTest = Math.ceil(transform / 100)
+    if (numberTest % 2 === 0) {
+      console.log("rød")
+    } else {
+      console.log("sort")
+    }
     setTimeout(() => {
       setTransform(null)
       setTimer(10)

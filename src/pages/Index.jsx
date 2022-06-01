@@ -1,7 +1,15 @@
 import Nav from "../components/Nav"
 import Form from "../components/Form"
 
+import { useState } from "react"
+
 const Index = () => {
+  const [username, setUsername] = useState(null)
+
+  function handleUsername(name) {
+    setUsername(name)
+  }
+
   return (
     <div>
       <Nav />
@@ -20,7 +28,15 @@ const Index = () => {
             },
           ]}
           btnTxt="Play now"
+          handleUsername={handleUsername}
         />
+        {username && (
+          <img
+            style={{ width: "200px" }}
+            src={`https://avatars.dicebear.com/api/adventurer/${username}.svg`}
+            alt=""
+          />
+        )}
       </div>
     </div>
   )

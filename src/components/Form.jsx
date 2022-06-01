@@ -4,7 +4,7 @@ import { useState } from "react"
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-const Form = ({ fields, btnTxt }) => {
+const Form = ({ fields, btnTxt, handleUsername }) => {
   let generatedStateObject = {}
   fields.forEach((field) => {
     generatedStateObject = { ...generatedStateObject, [field.name]: "" }
@@ -32,6 +32,7 @@ const Form = ({ fields, btnTxt }) => {
   // On change
   function handleChange(event) {
     const { name, value, type, checked } = event.target
+    if (name === "username") handleUsername(value)
     setFormData((prevFormData) => {
       return {
         ...prevFormData,

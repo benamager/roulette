@@ -1,15 +1,21 @@
+import Wheel from "../components/Wheel"
+import RouletteTable from "../components/RouletteTable"
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-import Wheel from "../components/Wheel"
-
-const Play = () => {
-  const style = css`
-    background-color: #0d5c38;
-  `
+const Gamble = () => {
+  const styles = {
+    container: css`
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+    `,
+  }
 
   return (
-    <section css={style}>
+    <div css={styles.container}>
       <Wheel
         values={[
           "00",
@@ -92,10 +98,11 @@ const Play = () => {
           "red",
         ]}
         mirrorOn={false}
-        startDeg={-4}
+        startDeg={-2}
       />
-    </section>
+      <RouletteTable />
+    </div>
   )
 }
 
-export default Play
+export default Gamble
