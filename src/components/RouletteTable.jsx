@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-const RouletteTable = () => {
+const RouletteTable = ({ disabled }) => {
   const styles = {
     container: css`
+      pointer-events: ${disabled === true && "none"};
       width: 100%;
       display: grid;
       gap: 0.3rem;
@@ -15,6 +16,11 @@ const RouletteTable = () => {
         "empty bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom bottom empty2";
       & li {
         cursor: pointer;
+        transition: box-shadow 0.1s;
+        &:hover {
+          -webkit-box-shadow: inset -8px -11px 21px -3px rgba(255, 255, 255, 0.18);
+          box-shadow: inset -8px -11px 21px -3px rgba(255, 255, 255, 0.18);
+        }
       }
     `,
     numbers: css`
@@ -109,6 +115,10 @@ const RouletteTable = () => {
         color: transparent;
         margin: 0 auto;
         clip-path: polygon(50% 10%, 100% 50%, 50% 90%, 0% 50%);
+        transition: transform 0.1s;
+        &:hover {
+          transform: scale(1.05);
+        }
       }
       & .black {
         background-color: black;

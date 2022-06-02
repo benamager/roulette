@@ -1,5 +1,7 @@
 import Wheel from "../components/Wheel"
 import RouletteTable from "../components/RouletteTable"
+import ChipContainer from "../components/ChipContainer"
+import MinMax from "../components/MinMax"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
@@ -11,6 +13,13 @@ const Gamble = () => {
       align-items: center;
       flex-direction: column;
       width: 100%;
+    `,
+    upperInfo: css`
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: 100%;
+      margin-bottom: 1rem;
     `,
   }
 
@@ -100,7 +109,11 @@ const Gamble = () => {
         mirrorOn={false}
         startDeg={-2}
       />
-      <RouletteTable />
+      <div css={styles.upperInfo}>
+        <ChipContainer disabled={false} />
+        <MinMax min={1} max={250} maxPerSpot={100} />
+      </div>
+      <RouletteTable disabled={false} />
     </div>
   )
 }

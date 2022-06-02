@@ -2,19 +2,11 @@
 import { css } from "@emotion/react"
 import { nanoid } from "nanoid"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 //import ComputedDegrees from "./customHooks/ComputedDegrees"
 
 const Wheel = (props) => {
-  const {
-    values,
-    colors,
-    mirrorOn,
-    startDeg,
-    rotations,
-    rotationTime,
-    withNotch,
-  } = props
+  const { values, colors, mirrorOn, startDeg, rotations, rotationTime } = props
 
   // Calculates how many deg each piece of wheel will be
   const piePieceDeg =
@@ -51,18 +43,13 @@ const Wheel = (props) => {
     return `${allColors[index]} ${currentDegrees}deg ${endingDegrees}deg`
   })
 
-  const [notch, setNotch] = useState({
-    rotate: "0deg",
-    bottom: "0",
-  })
-
   const styles = {
     outerContainer: css`
-      margin: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       max-width: 500px;
+      margin-bottom: -1rem;
     `,
     wheelContainer: css`
       display: grid;
@@ -177,10 +164,6 @@ const Wheel = (props) => {
   function clicked(e) {
     if (!isSpinning) {
       setIsSpinning(true)
-      setNotch({
-        rotate: "30deg",
-        bottom: "0",
-      })
       winningDeg = Math.ceil(Math.random() * 360)
       setWinDeg(winningDeg)
       e.target.style.transform = `rotate(${winningDeg + 360 * rotations}deg)`
@@ -191,10 +174,6 @@ const Wheel = (props) => {
   function endSpin(e) {
     e.target.style.transition = "unset"
     e.target.style.transform = `rotate(${winDeg}deg)`
-    setNotch({
-      rotate: "0deg",
-      bottom: "-1rem",
-    })
     setTimeout(() => {
       setIsSpinning(false)
       e.target.style.transition = `transform ${rotationTime} ease-out`
