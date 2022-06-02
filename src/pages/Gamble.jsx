@@ -2,6 +2,10 @@ import Wheel from "../components/Wheel"
 import RouletteTable from "../components/RouletteTable"
 import ChipContainer from "../components/ChipContainer"
 import MinMax from "../components/MinMax"
+import SpinningIn from "../components/SpinningIn"
+
+import Confetti from "react-confetti"
+import { useWindowSize } from "react-use"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
@@ -23,8 +27,15 @@ const Gamble = () => {
     `,
   }
 
+  let confetti = false
+  const { width, height } = useWindowSize()
+
   return (
     <div css={styles.container}>
+      {confetti && (
+        <Confetti numberOfPieces={300} width={width} height={height} />
+      )}
+      <SpinningIn time={2} />
       <Wheel
         values={[
           "00",

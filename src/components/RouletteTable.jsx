@@ -1,13 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
+import Chip from "./Chip"
+import { nanoid } from "nanoid"
+
+import { useRef, useState } from "react"
+import { useWindowSize } from "react-use"
+
 const RouletteTable = ({ disabled }) => {
   const styles = {
     container: css`
+      position: relative;
       pointer-events: ${disabled === true && "none"};
       width: 100%;
       display: grid;
       gap: 0.3rem;
+      user-select: none;
       grid-template-areas:
         "totoone num num num num num num num num num num num num zero"
         "totoone num num num num num num num num num num num num zero"
@@ -129,8 +137,50 @@ const RouletteTable = ({ disabled }) => {
     `,
   }
 
+  const { width, height } = useWindowSize()
+  const myRef = useRef()
+
+  const [droppedChips, setDroppedChips] = useState([])
+  function handleClick(e) {
+    // Doesn't work this if statement
+    const tableWidth = myRef.current.clientWidth
+    const tableHeight = myRef.current.clientHeight
+
+    // Only when clicking on li
+    if (e.target.tagName === "LI") {
+      // Gets the position to every side of element relative to viewport
+      var bounds = myRef.current.getBoundingClientRect()
+      // Client mouse x position minus bounds to left
+      var x = e.clientX - bounds.left
+      var y = e.clientY - bounds.top
+      // x, y position relative to container
+
+      // Calculating the percentages from the sides
+      let leftPercent = ((100 / tableWidth) * x).toFixed(2)
+      let topPercent = ((100 / tableHeight) * y).toFixed(2)
+
+      console.log("from left:", leftPercent, "%", "from top:", topPercent, "%")
+      setDroppedChips((prevState) => {
+        return [
+          ...prevState,
+          <Chip
+            value={10}
+            color="#7676D8"
+            size={50}
+            selected={false}
+            position="absolute"
+            percentLeft={leftPercent + "%"}
+            percentTop={topPercent + "%"}
+            key={nanoid()}
+          />,
+        ]
+      })
+    }
+  }
+
   return (
-    <div css={styles.container}>
+    <div onClick={handleClick} ref={myRef} css={styles.container}>
+      {droppedChips}
       <ul css={styles.totoone}>
         <li>2 to 1</li>
         <li>2 to 1</li>

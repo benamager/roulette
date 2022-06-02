@@ -26,6 +26,9 @@ const Wheel = (props) => {
   // Saving the values and their given degrees
   let resDeg = []
 
+  const [isSpinning, setIsSpinning] = useState(false)
+  const [winDeg, setWinDeg] = useState(0)
+
   // Generates the conic gradient
   const generatedConicGradient = allValues.map((value, index) => {
     // Only + the currentDegrees when index > 0
@@ -58,6 +61,15 @@ const Wheel = (props) => {
       height: 500px;
       cursor: pointer;
       transition: transform ${rotationTime};
+    `,
+    notch: css`
+      z-index: 100;
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 50px solid #542b16;
+      position: absolute;
     `,
     wheelBorder: css`
       pointer-events: none;
@@ -116,6 +128,7 @@ const Wheel = (props) => {
       width: 480px;
       height: 480px;
       background: conic-gradient(${generatedConicGradient.toString()});
+      animation: ${!isSpinning && "rotate"} 10s infinite linear;
       &::after {
         content: "";
         width: 100%;
@@ -126,6 +139,14 @@ const Wheel = (props) => {
         -webkit-box-shadow: 1px 3px 24px 0px rgba(0, 0, 0, 0.75);
         -moz-box-shadow: 1px 3px 24px 0px rgba(0, 0, 0, 0.75);
         box-sizing: border-box;
+      }
+      @keyframes rotate {
+        100% {
+          transform: rotate(0deg);
+        }
+        0% {
+          transform: rotate(-360deg);
+        }
       }
     `,
     text: css`
@@ -156,35 +177,36 @@ const Wheel = (props) => {
     )
   })
 
-  const [isSpinning, setIsSpinning] = useState(false)
-  const [winDeg, setWinDeg] = useState(0)
-
   let winningDeg = 0
   // Spinning wheel XXXdeg
   function clicked(e) {
     if (!isSpinning) {
       setIsSpinning(true)
-      winningDeg = Math.ceil(Math.random() * 360)
+      winningDeg = Math.random() * 360 // Actual winningDeg is 360-winningDeg
       setWinDeg(winningDeg)
-      e.target.style.transform = `rotate(${winningDeg + 360 * rotations}deg)`
+      e.target.style.transform = `rotate(${
+        winningDeg + 360 * rotations + 2
+      }deg)`
     }
   }
 
   // Resets degrees when finished spinning
   function endSpin(e) {
     e.target.style.transition = "unset"
-    e.target.style.transform = `rotate(${winDeg}deg)`
+    e.target.style.transform = `rotate(${winDeg + 2}deg)`
+    getResult(360 - winDeg) //360-winDeg because otherwise the results are reversed
     setTimeout(() => {
       setIsSpinning(false)
       e.target.style.transition = `transform ${rotationTime} ease-out`
-    }, 200)
+    }, 3500)
   }
 
   // Gets the result of the wheel from the given degree
   function getResult(degree) {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
-        console.log(result[2])
+        alert("The winning number is NOT" + result[2])
+        return
       }
     })
   }
