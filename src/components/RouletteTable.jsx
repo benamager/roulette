@@ -5,9 +5,14 @@ import Chip from "./Chip"
 import { nanoid } from "nanoid"
 
 import { useRef, useState } from "react"
-import { useWindowSize } from "react-use"
 
-const RouletteTable = ({ disabled }) => {
+const RouletteTable = ({
+  disabled,
+  allChips,
+  chipSize,
+  userData,
+  handleUserData,
+}) => {
   const styles = {
     container: css`
       position: relative;
@@ -137,10 +142,9 @@ const RouletteTable = ({ disabled }) => {
     `,
   }
 
-  const { width, height } = useWindowSize()
   const myRef = useRef()
 
-  const [droppedChips, setDroppedChips] = useState([])
+  // const [droppedChips, setDroppedChips] = useState([])
   function handleClick(e) {
     // Doesn't work this if statement
     const tableWidth = myRef.current.clientWidth
@@ -159,28 +163,52 @@ const RouletteTable = ({ disabled }) => {
       let leftPercent = ((100 / tableWidth) * x).toFixed(2)
       let topPercent = ((100 / tableHeight) * y).toFixed(2)
 
-      console.log("from left:", leftPercent, "%", "from top:", topPercent, "%")
-      setDroppedChips((prevState) => {
-        return [
+      // console.log("from left:", leftPercent, "%", "from top:", topPercent, "%") // TEMP
+
+      const selectedChipData = allChips.find(
+        (element) => element.value === userData.selectedChip
+      )
+
+      handleUserData((prevState) => {
+        return {
           ...prevState,
-          <Chip
-            value={10}
-            color="#7676D8"
-            size={50}
-            selected={false}
-            position="absolute"
-            percentLeft={leftPercent + "%"}
-            percentTop={topPercent + "%"}
-            key={nanoid()}
-          />,
-        ]
+          droppedChips: [
+            ...prevState.droppedChips,
+            <Chip
+              value={selectedChipData.value}
+              color={selectedChipData.color}
+              size={chipSize}
+              selected={false}
+              position="absolute"
+              percentLeft={leftPercent + "%"}
+              percentTop={topPercent + "%"}
+              key={nanoid()}
+            />,
+          ],
+        }
       })
+      // setDroppedChips((prevState) => {
+      //   return [
+      //     ...prevState,
+      // <Chip
+      //   value={selectedChipData.value}
+      //   color={selectedChipData.color}
+      //   size={chipSize}
+      //   selected={false}
+      //   position="absolute"
+      //   percentLeft={leftPercent + "%"}
+      //   percentTop={topPercent + "%"}
+      //   key={nanoid()}
+      // />,
+      //   ]
+      // })
     }
   }
 
   return (
     <div onClick={handleClick} ref={myRef} css={styles.container}>
-      {droppedChips}
+      {userData.droppedChips}
+      {/* {droppedChips} */}
       <ul css={styles.totoone}>
         <li>2 to 1</li>
         <li>2 to 1</li>

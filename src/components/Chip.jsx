@@ -13,6 +13,7 @@ const Chip = ({
 }) => {
   const style = css`
     position: ${position === "absolute" && "absolute"};
+    user-select: none;
     background-color: ${color};
     width: ${size + "px"};
     height: ${size + "px"};
@@ -27,7 +28,7 @@ const Chip = ({
     margin-left: -${percentLeft && size / 2 + "px"};
     margin-top: -${percentTop && size / 2 + "px"};
     border: 3px solid ${selected === false ? "#00000080" : "#f9d388"};
-    cursor: ${selected === false ? "pointer" : "default"};
+    cursor: pointer;
     transition: transform 0.1s;
     transform: scale(${selected === true && 1.1});
     &:hover {

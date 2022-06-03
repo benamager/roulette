@@ -2,11 +2,20 @@
 import { css } from "@emotion/react"
 import { nanoid } from "nanoid"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 //import ComputedDegrees from "./customHooks/ComputedDegrees"
 
 const Wheel = (props) => {
-  const { values, colors, mirrorOn, startDeg, rotations, rotationTime } = props
+  const {
+    values,
+    colors,
+    mirrorOn,
+    startDeg,
+    rotations,
+    rotationTime,
+    handleWheelData,
+    time,
+  } = props
 
   // Calculates how many deg each piece of wheel will be
   const piePieceDeg =
@@ -59,7 +68,6 @@ const Wheel = (props) => {
       place-items: center center;
       width: 500px;
       height: 500px;
-      cursor: pointer;
       transition: transform ${rotationTime};
     `,
     notch: css`
@@ -179,16 +187,31 @@ const Wheel = (props) => {
 
   let winningDeg = 0
   // Spinning wheel XXXdeg
-  function clicked(e) {
-    if (!isSpinning) {
+
+  const wheelRef = useRef()
+
+  useEffect(() => {
+    if (time === 0) {
       setIsSpinning(true)
       winningDeg = Math.random() * 360 // Actual winningDeg is 360-winningDeg
       setWinDeg(winningDeg)
-      e.target.style.transform = `rotate(${
+      wheelRef.current.style.transform = `rotate(${
         winningDeg + 360 * rotations + 2
       }deg)`
     }
-  }
+  }, [time])
+
+  // function clicked(e) { ON CLICK FUNCTION
+  //   if (!isSpinning) {
+  //     console.log(wheelRef.current)
+  //     setIsSpinning(true)
+  //     winningDeg = Math.random() * 360 // Actual winningDeg is 360-winningDeg
+  //     setWinDeg(winningDeg)
+  //     e.target.style.transform = `rotate(${
+  //       winningDeg + 360 * rotations + 2
+  //     }deg)`
+  //   }
+  // }
 
   // Resets degrees when finished spinning
   function endSpin(e) {
@@ -197,6 +220,12 @@ const Wheel = (props) => {
     getResult(360 - winDeg) //360-winDeg because otherwise the results are reversed
     setTimeout(() => {
       setIsSpinning(false)
+      props.handleUserData((prevState) => {
+        return { ...prevState, droppedChips: [] }
+      })
+      handleWheelData((prevState) => {
+        return { ...prevState, timeLeft: 10, isSpinning: false }
+      })
       e.target.style.transition = `transform ${rotationTime} ease-out`
     }, 3500)
   }
@@ -205,7 +234,7 @@ const Wheel = (props) => {
   function getResult(degree) {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
-        alert("The winning number is NOT" + result[2])
+        console.log("Og sejren går til dem med nr. " + result[2])
         return
       }
     })
@@ -215,10 +244,10 @@ const Wheel = (props) => {
     <div css={styles.outerContainer}>
       <div css={styles.notch}></div>
       <div
-        onClick={clicked}
         onTransitionEnd={endSpin}
         css={styles.wheelContainer}
         id="wheel"
+        ref={wheelRef}
       >
         <div css={styles.wheelCenter}></div>
         <ul css={styles.wheel}>{valuesMapped}</ul>

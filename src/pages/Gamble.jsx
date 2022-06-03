@@ -10,7 +10,7 @@ import { useWindowSize } from "react-use"
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-const Gamble = () => {
+const Gamble = (props) => {
   const styles = {
     container: css`
       display: flex;
@@ -27,6 +27,16 @@ const Gamble = () => {
     `,
   }
 
+  const allChips = [
+    { value: 1, color: "#ffffff" },
+    { value: 5, color: "#C75656" },
+    { value: 10, color: "#7676D8" },
+    { value: 25, color: "#529752" },
+    { value: 50, color: "#D3A34B" },
+    { value: 100, color: "#786D6D" },
+    { value: 250, color: "#EBB0BA" },
+  ]
+
   let confetti = false
   const { width, height } = useWindowSize()
 
@@ -35,8 +45,11 @@ const Gamble = () => {
       {confetti && (
         <Confetti numberOfPieces={300} width={width} height={height} />
       )}
-      <SpinningIn time={2} />
+      <SpinningIn time={props.wheelData.timeLeft} />
       <Wheel
+        handleUserData={props.handleUserData}
+        handleWheelData={props.handleWheelData}
+        time={props.wheelData.timeLeft}
         values={[
           "00",
           "27",
@@ -121,10 +134,22 @@ const Gamble = () => {
         startDeg={-2}
       />
       <div css={styles.upperInfo}>
-        <ChipContainer disabled={false} />
+        <ChipContainer
+          handleUserData={props.handleUserData}
+          chipSize={50}
+          userData={props.userData}
+          disabled={props.wheelData.isSpinning}
+          allChips={allChips}
+        />
         <MinMax min={1} max={250} maxPerSpot={100} />
       </div>
-      <RouletteTable disabled={false} />
+      <RouletteTable
+        chipSize={50}
+        disabled={props.wheelData.isSpinning}
+        allChips={allChips}
+        userData={props.userData}
+        handleUserData={props.handleUserData}
+      />
     </div>
   )
 }
