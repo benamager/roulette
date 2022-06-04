@@ -21,8 +21,9 @@ const Chip = ({
     z-index: 1;
     left: ${percentLeft && percentLeft};
     top: ${percentTop && percentTop};
-    display: grid;
-    place-items: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
     font-weight: 700;
     margin-left: -${percentLeft && size / 2 + "px"};

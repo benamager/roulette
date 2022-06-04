@@ -165,15 +165,18 @@ const RouletteTable = ({
 
       // console.log("from left:", leftPercent, "%", "from top:", topPercent, "%") // TEMP
 
+      // Getting the current selected chip
       const selectedChipData = allChips.find(
         (element) => element.value === userData.selectedChip
       )
 
+      let clickedOn = e.target.textContent.replace(/\s/g, "").toLowerCase()
+
       handleUserData((prevState) => {
         return {
           ...prevState,
-          droppedChips: [
-            ...prevState.droppedChips,
+          droppedChipsJSX: [
+            ...prevState.droppedChipsJSX,
             <Chip
               value={selectedChipData.value}
               color={selectedChipData.color}
@@ -185,30 +188,19 @@ const RouletteTable = ({
               key={nanoid()}
             />,
           ],
+          droppedChips: [
+            ...prevState.droppedChips,
+            { bet: clickedOn, value: userData.selectedChip },
+          ],
+          balance: prevState.balance - selectedChipData.value,
         }
       })
-      // setDroppedChips((prevState) => {
-      //   return [
-      //     ...prevState,
-      // <Chip
-      //   value={selectedChipData.value}
-      //   color={selectedChipData.color}
-      //   size={chipSize}
-      //   selected={false}
-      //   position="absolute"
-      //   percentLeft={leftPercent + "%"}
-      //   percentTop={topPercent + "%"}
-      //   key={nanoid()}
-      // />,
-      //   ]
-      // })
     }
   }
 
   return (
     <div onClick={handleClick} ref={myRef} css={styles.container}>
-      {userData.droppedChips}
-      {/* {droppedChips} */}
+      {userData.droppedChipsJSX}
       <ul css={styles.totoone}>
         <li>2 to 1</li>
         <li>2 to 1</li>

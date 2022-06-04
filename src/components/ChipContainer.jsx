@@ -17,7 +17,6 @@ const ChipContainer = ({
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border: 3px solid #f9d38850;
-    margin-left: 8%;
     pointer-events: ${disabled === true && "none"};
   `
 
@@ -25,7 +24,7 @@ const ChipContainer = ({
 
   function handleClick(e) {
     if (e.target.tagName === "DIV") {
-      if (e.target.textContent != userData.selectedChip) {
+      if (e.target.textContent !== userData.selectedChip) {
         handleUserData((prevState) => {
           return { ...prevState, selectedChip: parseInt(e.target.textContent) }
         })

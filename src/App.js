@@ -8,21 +8,42 @@ import Contact from "./pages/Contact"
 // Avatar fetch url https://avatars.dicebear.com/api/adventurer/benjamin.svg
 
 function App() {
+  // User data
   const [userData, setUserData] = useState({
     username: "benjamin",
     balance: 500,
     selectedChip: 1,
     droppedChips: [],
+    droppedChipsJSX: [],
   })
 
+  // Wheel data
   const [wheelData, setWheelData] = useState({
     isSpinning: false,
     timeLeft: 10,
+    lastWin: null,
   })
 
-  // useEffect(() => { // TEMP
-  //   console.log(userData)
-  // }, [userData])
+  const [winningsAmount, setWinningsAmount] = useState(0)
+
+  function addToBalance(amount) {
+    setWinningsAmount((prevState) => {
+      return prevState + amount
+    })
+    setUserData((prevState) => {
+      return { ...prevState, balance: prevState.balance + amount }
+    })
+  }
+
+  function handleResult(winningData) {
+    const { droppedChips } = userData
+    console.log(winningData)
+    droppedChips.forEach(({ bet, value }) => {
+      if ((bet === "black" || "red") && bet === winningData[0]) {
+        addToBalance(value * 2)
+      }
+    })
+  }
 
   // Timer with cleanup
   useEffect(() => {
@@ -51,8 +72,11 @@ function App() {
               <Gamble
                 wheelData={wheelData}
                 userData={userData}
+                handleResult={handleResult}
                 handleWheelData={setWheelData}
                 handleUserData={setUserData}
+                winningsAmount={winningsAmount}
+                handleWinningsAmount={setWinningsAmount}
               />
             }
           />

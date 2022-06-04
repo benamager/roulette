@@ -15,6 +15,7 @@ const Wheel = (props) => {
     rotationTime,
     handleWheelData,
     time,
+    handleResult,
   } = props
 
   // Calculates how many deg each piece of wheel will be
@@ -49,7 +50,10 @@ const Wheel = (props) => {
     let endingDegrees = (index + 1) * piePieceDeg
 
     // [0, 60, "Blåbar"] saves from which degrees the result is
-    resDeg = [...resDeg, [currentDegrees, endingDegrees, value]]
+    resDeg = [
+      ...resDeg,
+      [currentDegrees, endingDegrees, value, allColors[index]],
+    ]
 
     // Returns the color & start-deg & end-deg
     return `${allColors[index]} ${currentDegrees}deg ${endingDegrees}deg`
@@ -221,7 +225,7 @@ const Wheel = (props) => {
     setTimeout(() => {
       setIsSpinning(false)
       props.handleUserData((prevState) => {
-        return { ...prevState, droppedChips: [] }
+        return { ...prevState, droppedChipsJSX: [], droppedChips: [] }
       })
       handleWheelData((prevState) => {
         return { ...prevState, timeLeft: 10, isSpinning: false }
@@ -234,7 +238,10 @@ const Wheel = (props) => {
   function getResult(degree) {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
-        console.log("Og sejren går til dem med nr. " + result[2])
+        handleWheelData((prevState) => {
+          return { ...prevState, lastWin: [result[3], result[2]] }
+        })
+        handleResult([result[3], result[2]])
         return
       }
     })

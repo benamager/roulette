@@ -3,9 +3,8 @@ import RouletteTable from "../components/RouletteTable"
 import ChipContainer from "../components/ChipContainer"
 import MinMax from "../components/MinMax"
 import SpinningIn from "../components/SpinningIn"
-
-import Confetti from "react-confetti"
-import { useWindowSize } from "react-use"
+import ShowWinnings from "../components/ShowWinnings"
+import ShowBalance from "../components/ShowBalance"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
@@ -24,6 +23,12 @@ const Gamble = (props) => {
       align-items: flex-end;
       width: 100%;
       margin-bottom: 1rem;
+      padding-left: 8%;
+      & div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     `,
   }
 
@@ -37,18 +42,19 @@ const Gamble = (props) => {
     { value: 250, color: "#EBB0BA" },
   ]
 
-  let confetti = false
-  const { width, height } = useWindowSize()
-
   return (
     <div css={styles.container}>
-      {confetti && (
-        <Confetti numberOfPieces={300} width={width} height={height} />
+      {props.winningsAmount > 0 && (
+        <ShowWinnings
+          amount={props.winningsAmount}
+          handleWinningsAmount={props.handleWinningsAmount}
+        />
       )}
       <SpinningIn time={props.wheelData.timeLeft} />
       <Wheel
         handleUserData={props.handleUserData}
         handleWheelData={props.handleWheelData}
+        handleResult={props.handleResult}
         time={props.wheelData.timeLeft}
         values={[
           "00",
@@ -134,13 +140,16 @@ const Gamble = (props) => {
         startDeg={-2}
       />
       <div css={styles.upperInfo}>
-        <ChipContainer
-          handleUserData={props.handleUserData}
-          chipSize={50}
-          userData={props.userData}
-          disabled={props.wheelData.isSpinning}
-          allChips={allChips}
-        />
+        <div>
+          <ShowBalance balance={props.userData.balance} />
+          <ChipContainer
+            handleUserData={props.handleUserData}
+            chipSize={50}
+            userData={props.userData}
+            disabled={props.wheelData.isSpinning}
+            allChips={allChips}
+          />
+        </div>
         <MinMax min={1} max={250} maxPerSpot={100} />
       </div>
       <RouletteTable
