@@ -5,6 +5,7 @@ import MinMax from "../components/MinMax"
 import SpinningIn from "../components/SpinningIn"
 import ShowWinnings from "../components/ShowWinnings"
 import ShowBalance from "../components/ShowBalance"
+import Undo from "../components/Undo"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
@@ -24,11 +25,16 @@ const Gamble = (props) => {
       width: 100%;
       margin-bottom: 1rem;
       padding-left: 8%;
-      & div {
+      & > div {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
       }
+    `,
+    chipContainer: css`
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
     `,
   }
 
@@ -129,7 +135,12 @@ const Gamble = (props) => {
       <div css={styles.upperInfo}>
         <div>
           <ShowBalance />
-          <ChipContainer chipSize={50} />
+          <div css={styles.chipContainer}>
+            <ChipContainer chipSize={50} />
+            {props.droppedChips.length > 0 && props.isSpinning === false && (
+              <Undo />
+            )}
+          </div>
         </div>
         <MinMax min={1} max={250} maxPerSpot={100} />
       </div>

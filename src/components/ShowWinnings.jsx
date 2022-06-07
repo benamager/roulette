@@ -5,6 +5,8 @@ import { useWindowSize } from "react-use"
 import Confetti from "react-confetti"
 import { useEffect } from "react"
 
+import { GiMoneyStack } from "react-icons/gi"
+
 const ShowWinnings = (props) => {
   const { width, height } = useWindowSize()
   const style = css`
@@ -17,10 +19,19 @@ const ShowWinnings = (props) => {
     background-color: #f9d388;
     z-index: 100;
     width: 30%;
-    height: 10%;
-    display: grid;
-    place-items: center center;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
     animation: popUp 0.5s ease-out;
+    border: 10px dotted green;
+    outline: 5px solid #f9d388;
+    box-shadow: 6px 5px 37px 3px rgba(0, 0, 0, 0.2);
+    & svg {
+      font-size: 4rem;
+      color: green;
+    }
     & p {
       font-size: 4rem;
     }
@@ -42,7 +53,9 @@ const ShowWinnings = (props) => {
 
   return (
     <div css={style}>
-      <p>+{props.amount}</p>
+      <GiMoneyStack />
+      <p>{props.amount}$</p>
+      <GiMoneyStack />
     </div>
   )
 }

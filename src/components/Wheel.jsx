@@ -244,7 +244,7 @@ const Wheel = (props) => {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
         setWheelData((prevState) => {
-          return { ...prevState, lastWin: [result[3], result[2]] }
+          return { ...prevState, lastWin: [result[3], result[2]], timeLeft: -1 }
         })
         handleResult([result[3], result[2]])
         return

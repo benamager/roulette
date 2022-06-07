@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect } from "react"
 
 // Pages
 import Gamble from "./pages/Gamble"
 import Contact from "./pages/Contact"
-import Index from "./pages/Index"
 
 import UserDataContext from "./contexts/userData"
 import WheelDataContext from "./contexts/wheelData"
@@ -28,6 +27,7 @@ function App() {
     lastWin: null,
   })
 
+  // Calculating winningsAmount
   const [winningsAmount, setWinningsAmount] = useState(0)
 
   function addToBalance(amount) {
@@ -66,12 +66,6 @@ function App() {
     }
   }, [wheelData])
 
-  const [name, setName] = useState("benjamin")
-
-  useEffect(() => {
-    console.log(name)
-  }, [name])
-
   return (
     <div className="App">
       <UserDataContext.Provider value={{ userData, setUserData }}>
@@ -85,6 +79,8 @@ function App() {
                     handleResult={handleResult}
                     winningsAmount={winningsAmount}
                     handleWinningsAmount={setWinningsAmount}
+                    droppedChips={userData.droppedChips}
+                    isSpinning={wheelData.isSpinning}
                   />
                 }
               />

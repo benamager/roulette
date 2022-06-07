@@ -34,6 +34,7 @@ const SpinningIn = () => {
         </p>
       )}
       {time === 0 && <p css={style.default}>Now spinning</p>}
+      {time === -1 && <p css={style.default}>{wheelData.lastWin}</p>}
     </>
   )
 }

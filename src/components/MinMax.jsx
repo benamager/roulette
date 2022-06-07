@@ -12,6 +12,7 @@ const MinMax = ({ min, max, maxPerSpot }) => {
     border-bottom: 13px solid #a4793c;
     border-right: 5px solid #a4793c;
     padding: 1rem;
+    user-select: none;
     font-size: 1.5rem;
     font-weight: 700;
   `

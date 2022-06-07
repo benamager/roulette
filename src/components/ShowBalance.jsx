@@ -12,7 +12,7 @@ const ShowBalance = () => {
     font-weight: 600;
   `
 
-  return <div css={style}>Your balance: {userData.balance}</div>
+  return <div css={style}>Your balance: {userData.balance}$</div>
 }
 
 export default ShowBalance
