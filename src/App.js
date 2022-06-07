@@ -4,6 +4,11 @@ import { useState, useEffect } from "react"
 // Pages
 import Gamble from "./pages/Gamble"
 import Contact from "./pages/Contact"
+import Index from "./pages/Index"
+
+// Context
+import { createContext } from "react"
+import NameContext from "./components/context"
 
 // Avatar fetch url https://avatars.dicebear.com/api/adventurer/benjamin.svg
 
@@ -64,25 +69,28 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="gamble"
-            element={
-              <Gamble
-                wheelData={wheelData}
-                userData={userData}
-                handleResult={handleResult}
-                handleWheelData={setWheelData}
-                handleUserData={setUserData}
-                winningsAmount={winningsAmount}
-                handleWinningsAmount={setWinningsAmount}
-              />
-            }
-          />
-          <Route path="contact" element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
+      <NameContext.Provider value="hej">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route
+              path="gamble"
+              element={
+                <Gamble
+                  wheelData={wheelData}
+                  userData={userData}
+                  handleResult={handleResult}
+                  handleWheelData={setWheelData}
+                  handleUserData={setUserData}
+                  winningsAmount={winningsAmount}
+                  handleWinningsAmount={setWinningsAmount}
+                />
+              }
+            />
+            <Route path="contact" element={<Contact />} />
+          </Routes>
+        </BrowserRouter>
+      </NameContext.Provider>
     </div>
   )
 }

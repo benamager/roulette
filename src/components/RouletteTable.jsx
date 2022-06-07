@@ -76,9 +76,8 @@ const RouletteTable = ({
       font-weight: 900;
       font-size: 2rem;
       display: grid;
+      grid-template-rows: repeat(2, 1fr);
       grid-area: zero;
-      grid-template-columns: repeat(1, 1fr);
-      grid-template-rows: repeat(1, 1fr);
       list-style: none;
       color: green;
       & li {
@@ -207,30 +206,6 @@ const RouletteTable = ({
         <li>2 to 1</li>
       </ul>
       <ul css={styles.numbers}>
-        <li className="red">34</li>
-        <li className="black">31</li>
-        <li className="black">28</li>
-        <li className="red">25</li>
-        <li className="black">22</li>
-        <li className="red">19</li>
-        <li className="red">16</li>
-        <li className="black">13</li>
-        <li className="black">10</li>
-        <li className="red">7</li>
-        <li className="black">4</li>
-        <li className="red">1</li>
-        <li className="black">35</li>
-        <li className="red">32</li>
-        <li className="black">29</li>
-        <li className="black">26</li>
-        <li className="red">23</li>
-        <li className="black">20</li>
-        <li className="black">17</li>
-        <li className="red">14</li>
-        <li className="black">11</li>
-        <li className="black">8</li>
-        <li className="red">5</li>
-        <li className="black">2</li>
         <li className="red">36</li>
         <li className="black">33</li>
         <li className="red">30</li>
@@ -243,9 +218,34 @@ const RouletteTable = ({
         <li className="red">9</li>
         <li className="black">6</li>
         <li className="red">3</li>
+        <li className="black">35</li>
+        <li className="red">32</li>
+        <li className="black">29</li>
+        <li className="black">26</li>
+        <li className="red">23</li>
+        <li className="black">20</li>
+        <li className="black">17</li>
+        <li className="red">14</li>
+        <li className="black">11</li>
+        <li className="black">8</li>
+        <li className="red">5</li>
+        <li className="black">2</li>
+        <li className="red">34</li>
+        <li className="black">31</li>
+        <li className="black">28</li>
+        <li className="red">25</li>
+        <li className="black">22</li>
+        <li className="red">19</li>
+        <li className="red">16</li>
+        <li className="black">13</li>
+        <li className="black">10</li>
+        <li className="red">7</li>
+        <li className="black">4</li>
+        <li className="red">1</li>
       </ul>
       <ul css={styles.zero}>
         <li>0</li>
+        <li>00</li>
       </ul>
       <ul css={styles.twelv}>
         <li>3rd 12</li>
