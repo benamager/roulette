@@ -32,16 +32,6 @@ const Gamble = (props) => {
     `,
   }
 
-  const allChips = [
-    { value: 1, color: "#ffffff" },
-    { value: 5, color: "#C75656" },
-    { value: 10, color: "#7676D8" },
-    { value: 25, color: "#529752" },
-    { value: 50, color: "#D3A34B" },
-    { value: 100, color: "#786D6D" },
-    { value: 250, color: "#EBB0BA" },
-  ]
-
   return (
     <div css={styles.container}>
       {props.winningsAmount > 0 && (
@@ -50,12 +40,9 @@ const Gamble = (props) => {
           handleWinningsAmount={props.handleWinningsAmount}
         />
       )}
-      <SpinningIn time={props.wheelData.timeLeft} />
+      <SpinningIn />
       <Wheel
-        handleUserData={props.handleUserData}
-        handleWheelData={props.handleWheelData}
         handleResult={props.handleResult}
-        time={props.wheelData.timeLeft}
         values={[
           "00",
           "27",
@@ -141,24 +128,12 @@ const Gamble = (props) => {
       />
       <div css={styles.upperInfo}>
         <div>
-          <ShowBalance balance={props.userData.balance} />
-          <ChipContainer
-            handleUserData={props.handleUserData}
-            chipSize={50}
-            userData={props.userData}
-            disabled={props.wheelData.isSpinning}
-            allChips={allChips}
-          />
+          <ShowBalance />
+          <ChipContainer chipSize={50} />
         </div>
         <MinMax min={1} max={250} maxPerSpot={100} />
       </div>
-      <RouletteTable
-        chipSize={50}
-        disabled={props.wheelData.isSpinning}
-        allChips={allChips}
-        userData={props.userData}
-        handleUserData={props.handleUserData}
-      />
+      <RouletteTable chipSize={50} />
     </div>
   )
 }

@@ -2,8 +2,12 @@
 import { css } from "@emotion/react"
 import { nanoid } from "nanoid"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
 //import ComputedDegrees from "./customHooks/ComputedDegrees"
+
+// Context
+import UserDataContext from "../contexts/userData"
+import WheelDataContext from "../contexts/wheelData"
 
 const Wheel = (props) => {
   const {
@@ -13,10 +17,11 @@ const Wheel = (props) => {
     startDeg,
     rotations,
     rotationTime,
-    handleWheelData,
-    time,
     handleResult,
   } = props
+
+  const { userData, setUserData } = useContext(UserDataContext)
+  const { wheelData, setWheelData } = useContext(WheelDataContext)
 
   // Calculates how many deg each piece of wheel will be
   const piePieceDeg =
@@ -195,7 +200,7 @@ const Wheel = (props) => {
   const wheelRef = useRef()
 
   useEffect(() => {
-    if (time === 0) {
+    if (wheelData.timeLeft === 0) {
       setIsSpinning(true)
       winningDeg = Math.random() * 360 // Actual winningDeg is 360-winningDeg
       setWinDeg(winningDeg)
@@ -203,7 +208,7 @@ const Wheel = (props) => {
         winningDeg + 360 * rotations + 2
       }deg)`
     }
-  }, [time])
+  }, [wheelData.timeLeft])
 
   // function clicked(e) { ON CLICK FUNCTION
   //   if (!isSpinning) {
@@ -224,10 +229,10 @@ const Wheel = (props) => {
     getResult(360 - winDeg) //360-winDeg because otherwise the results are reversed
     setTimeout(() => {
       setIsSpinning(false)
-      props.handleUserData((prevState) => {
+      setUserData((prevState) => {
         return { ...prevState, droppedChipsJSX: [], droppedChips: [] }
       })
-      handleWheelData((prevState) => {
+      setWheelData((prevState) => {
         return { ...prevState, timeLeft: 10, isSpinning: false }
       })
       e.target.style.transition = `transform ${rotationTime} ease-out`
@@ -238,7 +243,7 @@ const Wheel = (props) => {
   function getResult(degree) {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
-        handleWheelData((prevState) => {
+        setWheelData((prevState) => {
           return { ...prevState, lastWin: [result[3], result[2]] }
         })
         handleResult([result[3], result[2]])

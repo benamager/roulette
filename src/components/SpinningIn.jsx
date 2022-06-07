@@ -1,7 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
 
-const SpinningIn = ({ time }) => {
+import { useContext } from "react"
+import WheelDataContext from "../contexts/wheelData"
+
+const SpinningIn = () => {
+  const { wheelData, setWheelData } = useContext(WheelDataContext)
+  const time = wheelData.timeLeft
+
   const style = {
     default: css`
       font-size: 2rem;

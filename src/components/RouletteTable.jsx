@@ -4,19 +4,24 @@ import { css } from "@emotion/react"
 import Chip from "./Chip"
 import { nanoid } from "nanoid"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useContext } from "react"
 
-const RouletteTable = ({
-  disabled,
-  allChips,
-  chipSize,
-  userData,
-  handleUserData,
-}) => {
+// Context
+import UserDataContext from "../contexts/userData"
+import WheelDataContext from "../contexts/wheelData"
+// Context without state
+import AllChipsContext from "../contexts/allChips"
+
+const RouletteTable = ({ chipSize }) => {
+  // Context
+  const { userData, setUserData } = useContext(UserDataContext)
+  const { wheelData, setWheelData } = useContext(WheelDataContext)
+  const allChips = useContext(AllChipsContext)
+
   const styles = {
     container: css`
       position: relative;
-      pointer-events: ${disabled === true && "none"};
+      pointer-events: ${wheelData.isSpinning === true && "none"};
       width: 100%;
       display: grid;
       gap: 0.3rem;
@@ -172,7 +177,7 @@ const RouletteTable = ({
 
       let clickedOn = e.target.textContent.replace(/\s/g, "").toLowerCase()
 
-      handleUserData((prevState) => {
+      setUserData((prevState) => {
         return {
           ...prevState,
           droppedChipsJSX: [

@@ -82,11 +82,7 @@ function App() {
                 path="gamble"
                 element={
                   <Gamble
-                    wheelData={wheelData}
-                    userData={userData}
                     handleResult={handleResult}
-                    handleWheelData={setWheelData}
-                    handleUserData={setUserData}
                     winningsAmount={winningsAmount}
                     handleWinningsAmount={setWinningsAmount}
                   />
