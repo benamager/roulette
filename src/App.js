@@ -1,14 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 
 // Pages
 import Gamble from "./pages/Gamble"
 import Contact from "./pages/Contact"
 import Index from "./pages/Index"
 
-// Context
-import { createContext } from "react"
-import NameContext from "./components/context"
+import UserDataContext from "./contexts/userData"
+import WheelDataContext from "./contexts/wheelData"
 
 // Avatar fetch url https://avatars.dicebear.com/api/adventurer/benjamin.svg
 
@@ -67,30 +66,33 @@ function App() {
     }
   }, [wheelData])
 
+  const [name, setName] = useState("benjamin")
+
+  useEffect(() => {
+    console.log(name)
+  }, [name])
+
   return (
     <div className="App">
-      <NameContext.Provider value="hej">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route
-              path="gamble"
-              element={
-                <Gamble
-                  wheelData={wheelData}
-                  userData={userData}
-                  handleResult={handleResult}
-                  handleWheelData={setWheelData}
-                  handleUserData={setUserData}
-                  winningsAmount={winningsAmount}
-                  handleWinningsAmount={setWinningsAmount}
-                />
-              }
-            />
-            <Route path="contact" element={<Contact />} />
-          </Routes>
-        </BrowserRouter>
-      </NameContext.Provider>
+      <UserDataContext.Provider value={{ userData, setUserData }}>
+        <WheelDataContext.Provider value={{ wheelData, setWheelData }}>
+          <BrowserRouter>
+            <Routes>
+              <Route
+                path="gamble"
+                element={
+                  <Gamble
+                    handleResult={handleResult}
+                    winningsAmount={winningsAmount}
+                    handleWinningsAmount={setWinningsAmount}
+                  />
+                }
+              />
+              <Route path="contact" element={<Contact />} />
+            </Routes>
+          </BrowserRouter>
+        </WheelDataContext.Provider>
+      </UserDataContext.Provider>
     </div>
   )
 }

@@ -1,14 +1,16 @@
-import DarkModeToggle from "react-dark-mode-toggle"
-
-import { useContext } from "react"
 import NameContext from "../components/context"
+import { useContext } from "react"
 
 const Index = () => {
-  const name = useContext(NameContext)
-  console.log(name)
+  const { name, setName } = useContext(NameContext)
   return (
     <div>
-      <DarkModeToggle onChange={null} checked={true} size={80} />
+      <div style={{ fontSize: "4rem" }}>{name}</div>
+      <input
+        style={{ fontSize: "4rem" }}
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+      />
     </div>
   )
 }

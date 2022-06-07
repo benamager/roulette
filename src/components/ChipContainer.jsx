@@ -4,20 +4,26 @@ import Chip from "./Chip"
 import { css } from "@emotion/react"
 import { nanoid } from "nanoid"
 
-const ChipContainer = ({
-  disabled,
-  chipSize,
-  userData,
-  handleUserData,
-  allChips,
-}) => {
+// Context
+import { useContext } from "react"
+import UserDataContext from "../contexts/userData"
+import WheelDataContext from "../contexts/wheelData"
+// Context without state
+import AllChipsContext from "../contexts/allChips"
+
+const ChipContainer = ({ chipSize }) => {
+  // Context states
+  const { userData, setUserData } = useContext(UserDataContext)
+  const { wheelData, setWheelData } = useContext(WheelDataContext)
+  const allChips = useContext(AllChipsContext)
+
   const style = css`
     background-color: #f9d38880;
     display: flex;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     border: 3px solid #f9d38850;
-    pointer-events: ${disabled === true && "none"};
+    pointer-events: ${wheelData.isSpinning === true && "none"};
   `
 
   //<Chip value={25} color="#529752" size={50} selected={false} />
@@ -25,7 +31,7 @@ const ChipContainer = ({
   function handleClick(e) {
     if (e.target.tagName === "DIV") {
       if (e.target.textContent !== userData.selectedChip) {
-        handleUserData((prevState) => {
+        setUserData((prevState) => {
           return { ...prevState, selectedChip: parseInt(e.target.textContent) }
         })
       }
