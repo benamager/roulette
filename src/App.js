@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 // Pages
 import Gamble from "./pages/Gamble"
 import Contact from "./pages/Contact"
+import Index from "./pages/Index"
+
+import NameContext from "./components/context"
 
 // Avatar fetch url https://avatars.dicebear.com/api/adventurer/benjamin.svg
 
@@ -62,27 +65,36 @@ function App() {
     }
   }, [wheelData])
 
+  const [name, setName] = useState("benjamin")
+
+  useEffect(() => {
+    console.log(name)
+  }, [name])
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="gamble"
-            element={
-              <Gamble
-                wheelData={wheelData}
-                userData={userData}
-                handleResult={handleResult}
-                handleWheelData={setWheelData}
-                handleUserData={setUserData}
-                winningsAmount={winningsAmount}
-                handleWinningsAmount={setWinningsAmount}
-              />
-            }
-          />
-          <Route path="contact" element={<Contact />} />
-        </Routes>
-      </BrowserRouter>
+      <NameContext.Provider value={{ name, setName }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route
+              path="gamble"
+              element={
+                <Gamble
+                  wheelData={wheelData}
+                  userData={userData}
+                  handleResult={handleResult}
+                  handleWheelData={setWheelData}
+                  handleUserData={setUserData}
+                  winningsAmount={winningsAmount}
+                  handleWinningsAmount={setWinningsAmount}
+                />
+              }
+            />
+            <Route path="contact" element={<Contact />} />
+          </Routes>
+        </BrowserRouter>
+      </NameContext.Provider>
     </div>
   )
 }
