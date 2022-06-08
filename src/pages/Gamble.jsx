@@ -49,7 +49,7 @@ const Gamble = (props) => {
         />
       )}
       <SpinningIn />
-      {props.lastWins.length > 0 && <LastWinnings lastWins={props.lastWins} />}
+      <LastWinnings lastWins={props.lastWins} />
       <Wheel
         handleResult={props.handleResult}
         values={[

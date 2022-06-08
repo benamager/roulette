@@ -11,6 +11,26 @@ import WheelDataContext from "./contexts/wheelData"
 // Avatar fetch url https://avatars.dicebear.com/api/adventurer/benjamin.svg
 
 function App() {
+  // Getting data on load
+  const userDataLocal = JSON.parse(localStorage.getItem("userData"))
+  const lastWinsLocal = JSON.parse(localStorage.getItem("lastWins"))
+  useEffect(() => {
+    if (userDataLocal && lastWinsLocal) {
+      setUserData((prevState) => {
+        return {
+          ...prevState,
+          username: userDataLocal.username,
+          balance: userDataLocal.balance,
+          selectedChip: userDataLocal.selectedChip,
+          droppedChips: userDataLocal.droppedChips,
+        }
+      })
+      setWheelData((prevState) => {
+        return { ...prevState, lastWins: lastWinsLocal }
+      })
+    }
+  }, [])
+
   // User data
   const [userData, setUserData] = useState({
     username: "benjamin",
@@ -24,11 +44,26 @@ function App() {
   const [wheelData, setWheelData] = useState({
     isSpinning: false,
     timeLeft: 10,
-    lastWins: [["red", "11"]],
+    lastWins: [],
     min: 1,
     max: 250,
     maxPerSpot: 100,
   })
+
+  // Saving userData to local storage on change
+  useEffect(() => {
+    const userDataFix = {
+      username: userData.username,
+      balance: userData.balance,
+      selectedChip: userData.selectedChip,
+      droppedChips: userData.droppedChips,
+    }
+    localStorage.setItem("userData", JSON.stringify(userDataFix))
+  }, [[], userData])
+
+  useEffect(() => {
+    localStorage.setItem("lastWins", JSON.stringify(wheelData.lastWins))
+  }, [wheelData.lastWins])
 
   // Calculating winningsAmount
   const [winningsAmount, setWinningsAmount] = useState(0)
