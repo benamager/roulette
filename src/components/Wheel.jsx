@@ -18,6 +18,7 @@ const Wheel = (props) => {
     rotations,
     rotationTime,
     handleResult,
+    size,
   } = props
 
   const { userData, setUserData } = useContext(UserDataContext)
@@ -69,14 +70,13 @@ const Wheel = (props) => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 500px;
-      margin-bottom: -1rem;
+      max-width: ${size + "px"};
     `,
     wheelContainer: css`
       display: grid;
       place-items: center center;
-      width: 500px;
-      height: 500px;
+      width: ${size + "px"};
+      height: ${size + "px"};
       transition: transform ${rotationTime};
     `,
     notch: css`
@@ -85,7 +85,7 @@ const Wheel = (props) => {
       height: 0;
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
-      border-top: 50px solid #542b16;
+      border-top: 39px solid #542b16;
       position: absolute;
     `,
     wheelBorder: css`
@@ -100,11 +100,11 @@ const Wheel = (props) => {
     wheelCenter: css`
       pointer-events: none;
       grid-area: 1/1;
-      width: 50%;
-      height: 50%;
+      width: 39%;
+      height: 39%;
       box-sizing: content-box;
       border-radius: 50%;
-      border: 32px solid transparent;
+      border: 45px solid transparent;
       outline: 5px solid #f9d388;
       z-index: 100;
       position: relative;
@@ -113,8 +113,8 @@ const Wheel = (props) => {
       &::after {
         z-index: 100;
         content: "";
-        width: 30%;
-        height: 30%;
+        width: 40%;
+        height: 40%;
         border-radius: 50%;
         box-shadow: 1px 3px 24px 0px rgba(0, 0, 0, 0.5);
         background-color: #f9d388;
@@ -122,8 +122,8 @@ const Wheel = (props) => {
       &::before {
         position: absolute;
         content: "";
-        width: 90%;
-        height: 90%;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         background-color: #765123;
         border: 5px solid #f9d388;
@@ -132,8 +132,8 @@ const Wheel = (props) => {
     `,
     wheel: css`
       pointer-events: none;
-      border: 35px solid #95653c;
-      outline: 20px solid #552b16;
+      border: 25px solid #95653c;
+      outline: 15px solid #552b16;
       grid-area: 1/1;
       transform: rotate(${startDeg + "deg"});
       position: relative;
@@ -142,8 +142,8 @@ const Wheel = (props) => {
       justify-content: center;
       list-style: none;
       border-radius: 50%;
-      width: 480px;
-      height: 480px;
+      width: 95%;
+      height: 95%;
       background: conic-gradient(${generatedConicGradient.toString()});
       animation: ${!isSpinning && "rotate"} 10s infinite linear;
       &::after {
@@ -173,7 +173,7 @@ const Wheel = (props) => {
       color: #ffffff;
       text-align: start;
       padding-left: 10px;
-      font-size: 1.3rem;
+      font-size: 1rem;
       font-weight: 900;
       user-select: none;
     `,
@@ -244,7 +244,11 @@ const Wheel = (props) => {
     resDeg.forEach((result) => {
       if (degree >= result[0] && degree <= result[1]) {
         setWheelData((prevState) => {
-          return { ...prevState, lastWin: [result[3], result[2]], timeLeft: -1 }
+          return {
+            ...prevState,
+            lastWins: [[result[3], result[2]], ...prevState.lastWins],
+            timeLeft: -1,
+          }
         })
         handleResult([result[3], result[2]])
         return

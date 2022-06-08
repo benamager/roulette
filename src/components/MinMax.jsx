@@ -1,7 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
+import { useContext } from "react"
 
-const MinMax = ({ min, max, maxPerSpot }) => {
+import WheelDataContext from "../contexts/wheelData"
+
+const MinMax = () => {
+  // Context
+  const { wheelData, setWheelData } = useContext(WheelDataContext)
+  // Deconstructoring
+  const { min, max, maxPerSpot } = wheelData
+
   const style = css`
     list-style: none;
     display: grid;
@@ -13,7 +21,7 @@ const MinMax = ({ min, max, maxPerSpot }) => {
     border-right: 5px solid #a4793c;
     padding: 1rem;
     user-select: none;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
   `
 

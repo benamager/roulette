@@ -24,7 +24,10 @@ function App() {
   const [wheelData, setWheelData] = useState({
     isSpinning: false,
     timeLeft: 10,
-    lastWin: null,
+    lastWins: [["red", "11"]],
+    min: 1,
+    max: 250,
+    maxPerSpot: 100,
   })
 
   // Calculating winningsAmount
@@ -81,6 +84,7 @@ function App() {
                     handleWinningsAmount={setWinningsAmount}
                     droppedChips={userData.droppedChips}
                     isSpinning={wheelData.isSpinning}
+                    lastWins={wheelData.lastWins}
                   />
                 }
               />

@@ -1,3 +1,5 @@
+// Static context
+
 import { createContext } from "react"
 const AllChipsContext = createContext([
   { value: 1, color: "#ffffff" },

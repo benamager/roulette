@@ -5,6 +5,7 @@ import MinMax from "../components/MinMax"
 import SpinningIn from "../components/SpinningIn"
 import ShowWinnings from "../components/ShowWinnings"
 import ShowBalance from "../components/ShowBalance"
+import LastWinnings from "../components/LastWinnings"
 import Undo from "../components/Undo"
 
 /** @jsxImportSource @emotion/react */
@@ -13,6 +14,7 @@ import { css } from "@emotion/react"
 const Gamble = (props) => {
   const styles = {
     container: css`
+      position: relative;
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -47,6 +49,7 @@ const Gamble = (props) => {
         />
       )}
       <SpinningIn />
+      {props.lastWins.length > 0 && <LastWinnings lastWins={props.lastWins} />}
       <Wheel
         handleResult={props.handleResult}
         values={[
@@ -131,12 +134,13 @@ const Gamble = (props) => {
         ]}
         mirrorOn={false}
         startDeg={-2}
+        size={400}
       />
       <div css={styles.upperInfo}>
         <div>
           <ShowBalance />
           <div css={styles.chipContainer}>
-            <ChipContainer chipSize={50} />
+            <ChipContainer chipSize={40} />
             {props.droppedChips.length > 0 && props.isSpinning === false && (
               <Undo />
             )}
@@ -144,7 +148,7 @@ const Gamble = (props) => {
         </div>
         <MinMax min={1} max={250} maxPerSpot={100} />
       </div>
-      <RouletteTable chipSize={50} />
+      <RouletteTable chipSize={40} />
     </div>
   )
 }

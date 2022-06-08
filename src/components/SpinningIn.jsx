@@ -10,8 +10,7 @@ const SpinningIn = () => {
 
   const style = {
     default: css`
-      font-size: 2rem;
-      margin-bottom: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 2px;
       color: #f9d388;
@@ -34,7 +33,7 @@ const SpinningIn = () => {
         </p>
       )}
       {time === 0 && <p css={style.default}>Now spinning</p>}
-      {time === -1 && <p css={style.default}>{wheelData.lastWin}</p>}
+      {time === -1 && <p css={style.default}>{wheelData.lastWins[0]}</p>}
     </>
   )
 }

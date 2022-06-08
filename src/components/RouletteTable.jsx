@@ -43,7 +43,7 @@ const RouletteTable = ({ chipSize }) => {
     `,
     numbers: css`
       font-weight: 900;
-      font-size: 2rem;
+      font-size: 1.5rem;
       display: grid;
       grid-area: num;
       grid-template-columns: repeat(12, 1fr);
@@ -79,7 +79,7 @@ const RouletteTable = ({ chipSize }) => {
     `,
     zero: css`
       font-weight: 900;
-      font-size: 2rem;
+      font-size: 1.5rem;
       display: grid;
       grid-template-rows: repeat(2, 1fr);
       grid-area: zero;
